@@ -1,0 +1,22 @@
+!!! Strict
+%html{ "xml:lang" => "en", :lang => "en-AU", :xmlns => "http://www.w3.org/1999/xhtml" }
+  %head
+    %title
+      Monit Aggregator
+    %meta{ :content => "application/xhtml; charset=UTF-8", "http-equiv" => "content-type" }
+    %meta{ "http-equiv" => "refresh", :content => 10 }
+    %link{ :href => "stylesheets/style.css", :rel => "stylesheet", :media => "screen, print, projection", :type => "text/css" }
+  %body
+    #header
+      #logo
+        %h1
+          Monit Aggregator
+        %h2
+      #topnav
+    #content
+      = yield
+    #latest
+      #container2
+      #footer
+        %p
+          Copyright &copy; 2005 willr Webdesign

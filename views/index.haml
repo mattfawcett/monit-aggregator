@@ -1,0 +1,26 @@
+- @monit_installations.each do |installation|
+  %div.one_monit_instance
+    %h3
+      %a{:href => link_with_auth(installation)}= installation['url']
+      -doc = installation['doc']
+      
+    %p= "Load: [#{doc.xpath('//service[@type=5]').css('load/avg01')}] [#{doc.xpath('//service[@type=5]').css('load/avg05')}] [#{doc.xpath('//service[@type=5]').css('load/avg15')}]"
+    %p= "CPU: user - #{doc.xpath('//service[@type=5]').css('cpu/user')}% | system - #{doc.xpath('//service[@type=5]').css('cpu/system')}% | wait - #{doc.xpath('//service[@type=5]').css('cpu/wait')}%"
+  
+    %table
+      %tr
+        %th Service Name
+        %th Uptime
+        %th CPU      
+        %th Memory Usage
+      
+      - doc.xpath('//service[@type=3]').each do |service|
+        %tr{:class => status_text(service)}
+          %td
+            %a{:href => "#{link_with_auth(installation)}/#{service.css('name').inner_html}"}= service.css('name')
+          %td= friendly_seconds( service.css('uptime').inner_html.to_i )
+          %td= service.css('cpu/percent')
+          %td
+            = service.css('memory/percent')
+            = "[#{service.css('memory/kilobyte')} KB]"
+          

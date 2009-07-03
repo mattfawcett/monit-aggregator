@@ -1,0 +1,9 @@
+server1:
+  url: http://www.blah:2812
+  username: myuser  
+  password: mypass
+  
+server2:
+  url: http://nokia-service.co.uk:2812
+
+  
