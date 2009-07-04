@@ -1,6 +1,7 @@
 require 'spec'
 require 'spec/interop/test'
 require 'rack/test'
+require 'base64'
 require File.expand_path(File.dirname(__FILE__) + '/../app')
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
@@ -11,9 +12,19 @@ describe 'monit-aggregator-server' do
     Sinatra::Application    
   end
   
-  it "should give success when I request the index" do
-    get '/'
+  it "should give success when I request the index with valid authentication" do
+    get '/', {}, {'HTTP_AUTHORIZATION'=> encode_credentials('admin', 'password')}
     last_response.should be_ok
+  end
+  
+  it "should give a 401 when no authentication credentials" do
+    get '/'
+    last_response.status.should eql(401)
+  end
+  
+  it "should give a 401 when bad authentication credentials" do
+    get '/', {}, {'HTTP_AUTHORIZATION'=> encode_credentials('admin', 'badpassword')}
+    last_response.status.should eql(401)
   end
   
 end

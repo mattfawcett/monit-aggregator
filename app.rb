@@ -6,6 +6,10 @@ require 'sinatra'
 require 'haml'
 require 'helpers'
 
+use Rack::Auth::Basic do |username, password|
+  [username, password] == ['admin', 'password']
+end
+
 get '/' do
   @monit_installations = []
   YAML::load( File.open( 'monit_installations.yml' ) ).each do |key, installation|
