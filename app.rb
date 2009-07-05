@@ -5,16 +5,14 @@ require 'net/http'
 require 'sinatra'
 require 'haml'
 require 'helpers'
+require 'monit_instance'
 
 use Rack::Auth::Basic do |username, password|
   [username, password] == ['admin', 'password']
 end
 
 get '/' do
-  @monit_installations = []
-  YAML::load( File.open( 'monit_installations.yml' ) ).each do |key, installation|
-    @monit_installations << installation.merge('doc' =>  xml_doc(installation['url'], installation['username'], installation['password']))
-  end    
+  @monit_installations = MonitInstance.all
   haml :index
 end
 

@@ -1,3 +1,11 @@
+require 'rubygems'
+require 'spec'
+require 'spec/interop/test'
+require 'rack/test'
+require 'base64'
+require File.expand_path(File.dirname(__FILE__) + '/../app')
+
+
 Spec::Runner.configure do |config|
   config.include MonitAggregatorHelpers
   
