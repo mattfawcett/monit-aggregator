@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'net/http'
 require 'sinatra'
-require 'haml'
+require 'erb'
 require 'helpers'
 require 'monit_instance'
 
@@ -13,9 +13,9 @@ end
 
 get '/' do
   @monit_installations = MonitInstance.all
-  haml :index
+  erb :index
 end
 
-helpers do      
-  include MonitAggregatorHelpers        
+helpers do
+  include MonitAggregatorHelpers
 end

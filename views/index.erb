@@ -1,0 +1,67 @@
+<% for server in @monit_installations %>
+<% doc = server.xml_doc %>
+<div id="one_monit_instance">
+  <h3>
+    <a href="<%= server.link_with_auth %>"><%= doc.xpath('//localhostname') %></a>
+  </h3>
+  <p>
+    Name: <%= doc.xpath('//platform//name') %> <br />
+    Release: <%= doc.xpath('//platform//release') %><br />
+    Version: <%= doc.xpath('//platform//version') %><br />
+    Machine: <%= doc.xpath('//platform//machine') %><br />
+    CPU: <%= doc.xpath('//platform//cpu') %><br />
+    Memory: <%= doc.xpath('//platform//memory') %> KB
+  </p>
+  <p>
+    Load: <%= "[#{doc.xpath('//service[@type=5]').css('load/avg01')}] [#{doc.xpath('//service[@type=5]').css('load/avg05')}] [#{doc.xpath('//service[@type=5]').css('load/avg15')}]" %>
+  </p>
+  <p>
+    CPU: <%= "user - #{doc.xpath('//service[@type=5]').css('cpu/user')}% | system - #{doc.xpath('//service[@type=5]').css('cpu/system')}%" %>
+  </p>
+  <p>
+    Memory : <%= doc.xpath('//service[@type=5]').css('memory/percent') %>% - <%= doc.xpath('//service[@type=5]').css('memory/kilobyte') %> KB
+  </p>
+  <table>
+    <tr>
+      <th>Service Name</th>
+      <th>Group</th>
+      <th>PID</th>
+      <th>Uptime</th>
+      <th>CPU</th>
+      <th>Memory Usage</th>
+    </tr>
+    <% doc.xpath('//service[@type=3]').each do |service| %>
+    <tr class="<%= status_class(service.css('status').inner_html,service.css('monitor').inner_html) %>">
+      <td><a href=<%= "#{server.link_with_auth}/#{service.css('name').first.inner_html}" %> target="_blank"><%= service.css('name').first %></a></td>
+      <td><%= service.css('groups/name') %></td>
+      <td><%= service.css('pid') %></td>
+      <td><%= friendly_seconds(service.css('uptime').inner_html.to_i) %></td>
+      <td><%= service.css('cpu/percenttotal') %></td>
+      <td><%= service.css('memory/percenttotal') %> [<%= service.css('memory/kilobyte') %>KB]</td>
+    </tr>
+    <% end %>
+  </table>
+  <table>
+    <tr>
+      <th>Filesystem</th>
+      <th>Space %</th>
+      <th>Space usage</th>
+      <th>Space total</th>
+      <th>Inodes %</th>
+      <th>Inodes usage</th>
+      <th>Inodes total</th>
+    </tr>
+    <% doc.xpath('//service[@type=0]').each do |service| %>
+    <tr class="<%= status_class(service.css('status').inner_html) %>">
+      <td><a href=<%= "#{server.link_with_auth}/#{service.css('name').first.inner_html}" %> target="_blank"><%= service.css('name').first %></a></td>
+      <td><%= service.css('block/percent') %> %</td>
+      <td><%= service.css('block/usage') %> MB</td>
+      <td><%= service.css('block/total') %> MB</td>
+      <td><%= service.css('inode/percent') %> %</td>
+      <td><%= service.css('inode/usage') %> objects</td>
+      <td><%= service.css('inode/total') %> objects</td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<% end %>

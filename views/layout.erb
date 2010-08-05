@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-type" content="application/xhtml; charset=utf-8">
+  <meta http-equiv="refresh" content="10">
+  <title>Monit Aggregator</title>
+  <link rel="stylesheet" href="stylesheets/style.css" media="screen, print, projection" charset="utf-8">
+
+</head>
+<body>
+  <div id="header">
+    <div id="logo">
+      <h1>Monit Aggregator</h1>
+    </div>
+  </div>
+  <div id="content">
+    <div style="background-color: #FFFFFF;">
+      Legend: <span style="color: #CDFFB3;">OK</span> - <span style="color: #FFC1C1;">Down</span> - <span style="color: #D3D3D3;">Inactive</span>
+    </div>
+<br />
+    <%= yield %>
+  </div>
+  <div id="latest">
+    <div id="footer">
+      <p>Library by <a href="http://matthewfawcett.co.uk">Matt Fawcett</a> |
+        Free Hosted version available at <a href="http://runslikeclockwork.com">Runs Like Clockwork</a>
+      </p>
+    </div>
+  </div>
+</body>

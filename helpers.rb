@@ -9,7 +9,7 @@ module MonitAggregatorHelpers
     string << "#{minutes}m"
     return string
   end
-  
+
   def status_text(doc)
     if doc.css("pid").inner_html == ""
       'Down'
@@ -17,5 +17,15 @@ module MonitAggregatorHelpers
       'Ok'
     end
   end
-    
+
+  def status_class(status=0,monitor=1)
+    return 'Inactive' if monitor.to_i == 0
+    case status.to_i
+    when 4096
+      'Down'
+    else
+      'Ok'
+    end
+  end
+
 end
