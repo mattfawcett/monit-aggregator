@@ -1,3 +1,7 @@
+require 'nokogiri'
+require 'open-uri'
+require 'net/http'
+
 class MonitInstance
 
   attr_accessor :url

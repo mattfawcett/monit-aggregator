@@ -1,11 +1,8 @@
 require 'rubygems'
-require 'nokogiri'
-require 'open-uri'
-require 'net/http'
+require 'bundler/setup'
 require 'sinatra'
-require 'erb'
-require 'helpers'
 require 'monit_instance'
+require 'helpers'
 
 use Rack::Auth::Basic do |username, password|
   [username, password] == ['admin', 'password']

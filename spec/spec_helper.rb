@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'bundler/setup'
 require 'spec'
 require 'spec/interop/test'
 require 'rack/test'
